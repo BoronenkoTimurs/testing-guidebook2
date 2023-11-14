@@ -23,8 +23,8 @@ describe("Homepage", () => {
     // expect(browser).toHaveUrl("/login", { containing: true });
 
     // Challange from capture 2.1.10
-    // await $("=conduit").click();
-    // const homepage = await browser.getUrl();
-    // await assert.strictEqual(homepage, "http://localhost:8080/");
+    await $("=conduit").click();
+    const homepage = await browser.getUrl();
+    await assert.strictEqual(homepage, "http://localhost:8080/");
   });
 });

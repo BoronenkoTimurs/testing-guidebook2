@@ -11,9 +11,12 @@
   "author": "",
   "license": "ISC",
   "dependencies": {
-    "@wdio/cli": "^8.22.1"
+    "@wdio/cli": "^8.22.1",
+    "allure-commandline": "^2.24.1",
+    "mongoose": "^8.0.0"
   },
   "devDependencies": {
+    "@wdio/allure-reporter": "^8.23.0",
     "@wdio/local-runner": "^8.22.1",
     "@wdio/mocha-framework": "^8.22.0",
     "@wdio/spec-reporter": "^8.21.0",
