@@ -1,18 +1,46 @@
+// Page Object Authorization
+class Auth {
+  get $email() {
+    return $('input[type="email"]');
+  }
+  get $password() {
+    return $('input[type="password"]');
+  }
+  get $signIn() {
+    return $("button*=Sign in");
+  }
+  get $errorMessages() {
+    return $(".error-message li");
+  }
+  async login(email, password) {
+    await this.$email.setValue(email);
+    await this.$password.setValue(password);
+    await this.$signIn.click();
+  }
+}
+const auth = new Auth();
+
 describe("Login Page", () => {
-  it("should let you log in", async () => {
-    // go to the login page
-    browser.url("./login");
-    // enter a valid username in the "email" input
-    await $('input[type="email"]').setValue("demo@learnwebdriverio.com");
-    // enter a valid password in the "password" input
-    // await $('input[type="password"]').setValue("wdiodemo");
-    // click the 'Sign In' button
-    await $(".btn").click();
-    // 1 sec pause
-    await browser.pause(1000);
-    // assert that we're logged in
-    await expect($(".error-messages li")).not.toBeExisting();
+  beforeEach(async () => {
+    await browser.url("./login");
   });
-  // should error with a missing username
-  // should error with a missing password
+  it("should let you log in", async () => {
+    await auth.login("demo@learnwebdriverio.com", "wdiodemo");
+
+    await auth.$signIn.waitForExist({ reverse: true });
+    await expect(auth.$errorMessages).not.toBeExisting();
+  });
+  it("should error with a missing username", async () => {
+    await auth.login("", "wdiodemo");
+
+    // TODO: why not working with await
+    expect(auth.$errorMessages).toHaveText(`email can't be blank`);
+  });
+
+  it("should error with a missing password", async () => {
+    await auth.login("demo@learnwebdriverio.com", "");
+
+    // TODO: why not working with await
+    expect(auth.$errorMessages).toHaveText(`password can't be blank`);
+  });
 });

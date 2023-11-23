@@ -61,7 +61,7 @@ exports.config = {
   // Define all options that are relevant for the WebdriverIO instance here
   //
   // Level of logging verbosity: trace | debug | info | warn | error | silent
-  logLevel: "info",
+  logLevel: "silent",
   //
   // Set specific log levels per logger
   // loggers:
@@ -85,7 +85,7 @@ exports.config = {
   // with `/`, the base url gets prepended, not including the path portion of your baseUrl.
   // If your `url` parameter starts without a scheme or `/` (like `some/path`), the base url
   // gets prepended directly.
-  baseUrl: "http://localhost:8080/",
+  baseUrl: "https://demo.learnwebdriverio.com/",
   //
   // Default timeout for all waitFor* commands.
   waitforTimeout: 10000,
@@ -124,7 +124,7 @@ exports.config = {
   // Test reporter for stdout.
   // The only one supported by default is 'dot'
   // see also: https://webdriver.io/docs/dot-reporter
-  reporters: ["allure"],
+  reporters: ["spec"],
 
   // Options to be passed to Mocha.
   // See the full list at http://mochajs.org/
