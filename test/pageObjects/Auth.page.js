@@ -1,5 +1,10 @@
+const Generic = require("./Generic.page");
+
 // Page Object Authorization
-class Auth {
+class Auth extends Generic {
+  constructor() {
+    super("./login");
+  }
   get $email() {
     return $('input[type="email"]');
   }
@@ -12,12 +17,11 @@ class Auth {
   get $errorMessages() {
     return $(".error-messages li");
   }
-  async login(email, password) {
+  async login({ email, password }) {
     await this.$email.setValue(email);
     await this.$password.setValue(password);
     await this.$signIn.click();
 
-    // TODO: why not working with await
     await browser.waitUntil(
       async () => {
         const signInExists = await this.$signIn.isExisting();
@@ -32,5 +36,4 @@ class Auth {
     );
   }
 }
-
 module.exports = Auth;

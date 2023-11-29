@@ -1,8 +1,8 @@
 const Register = require("../pageObjects/SignUp.page");
 
 const register = new Register();
-const username = "test12391";
-const email = "test1239@gmail.com";
+const username = "test123";
+const email = "test123@gmail.com";
 const password = "123456";
 
 describe("Sign up page testing", () => {

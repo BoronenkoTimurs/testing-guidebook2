@@ -1,29 +1,30 @@
 const Auth = require("../pageObjects/Auth.page");
+const { user1 } = require("../utilities/users");
 
 const auth = new Auth();
-const email = "demo@learnwebdriverio.com";
-const password = "wdiodemo";
 
 describe("Login Page", () => {
   beforeEach(async () => {
-    await browser.url("./login");
+    await auth.load();
   });
   it("should let you log in", async () => {
-    await auth.login(email, password);
-
-    // await expect(auth.$errorMessages).toBeExisting();
+    await auth.login(user1);
   });
   it("should error with a missing username", async () => {
-    await auth.login("", password);
+    await auth.login({
+      email: "",
+      password: user1.password,
+    });
 
-    // TODO: why not working with await
     await expect(auth.$errorMessages).toHaveText(`email can't be blank`);
   });
 
   it("should error with a missing password", async () => {
-    await auth.login(email, "");
+    await auth.login({
+      email: user1.email,
+      password: "",
+    });
 
-    // TODO: why not working with await
     await expect(auth.$errorMessages).toHaveText(`password can't be blank`);
   });
 });
