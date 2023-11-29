@@ -5,6 +5,7 @@ const auth = new Auth();
 
 describe("Login Page", () => {
   beforeEach(async () => {
+    await browser.url("./login");
     await auth.load();
   });
   it("should let you log in", async () => {

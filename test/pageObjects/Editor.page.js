@@ -22,6 +22,19 @@ class Editor extends Generic {
   get $delete() {
     return $('[data-qa-id="article-delete"]');
   }
+  get $home() {
+    return $("=Home");
+  }
+  async submitArticle({ title, description, body, tags }) {
+    await this.$title.setValue(title);
+    await this.$description.setValue(description);
+    await this.$body.setValue(body);
+    await tags.forEach((tag) => {
+      this.$tags.setValue(tag);
+      browser.keys("Enter");
+    });
+    await this.$publish.click();
+  }
 }
 
 module.exports = Editor;

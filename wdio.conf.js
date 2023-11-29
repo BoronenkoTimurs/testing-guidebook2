@@ -1,3 +1,11 @@
+const { Chance } = require("chance");
+if (!process.env.SEED) {
+  process.env.SEEd = Math.random().toString();
+
+  console.log(
+    `ChanceJS Seed: ${process.env.SEED} - Pass in using 'SEED=${process.env.SEED}'`
+  );
+}
 exports.config = {
   //
   // ====================
@@ -185,8 +193,15 @@ exports.config = {
    * @param {Array.<String>} specs        List of spec file paths that are to be run
    * @param {object}         browser      instance of created browser/device session
    */
-  // before: function (capabilities, specs) {
-  // },
+  before: function (capabilities, specs) {
+    // browser.throttle({
+    //   latency: 1000,
+    //   offline: false,
+    //   downloadThroughput: 1000000,
+    //   uploadThroughput: 1000000,
+    // });
+    global.chance = new Chance(process.env.SEED + specs[0]);
+  },
   /**
    * Runs before a WebdriverIO command gets executed.
    * @param {string} commandName hook command name

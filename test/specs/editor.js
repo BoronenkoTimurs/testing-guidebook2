@@ -1,22 +1,24 @@
 const Auth = require("../pageObjects/Auth.page");
 const Editor = require("../pageObjects/Editor.page");
+const Chance = require("chance");
+const Article = require("../pageObjects/Article.page");
 const { user1 } = require("../utilities/users");
 
 const auth = new Auth();
 const editor = new Editor();
+const chance = new Chance();
+const article = new Article();
 
 describe("Post Editor", () => {
   before(async () => {
-    // Load Auth page and log in
     await auth.load();
     await auth.login(user1);
   });
   beforeEach(async () => {
-    // Load the Post Editor page
     await editor.load();
   });
-  it("should load page properly", async () => {
-    // Not working becouse Generic.page.js line with new URL
+  it("should load editor page properly", async () => {
+    // TODO: Not working becouse Generic.page.js line with new URL
     // await expect(browser).toHaveUrl(editor.url.href);
     await expect(editor.$title).toBeExisting();
     await expect(editor.$description).toBeExisting();
@@ -24,16 +26,38 @@ describe("Post Editor", () => {
     await expect(editor.$tags).toBeExisting();
     await expect(editor.$publish).toBeExisting();
   });
-  it.only("shoud let you publish a new post", async () => {
-    await editor.$title.setValue("Test Title");
-    await editor.$description.setValue("Test Description");
-    await editor.$body.setValue("Test body");
+  it("shoud let you publish a new post", async () => {
+    const articleDetails = {
+      title: global.chance.sentence({ words: 3 }),
+      description: global.chance.sentence({ words: 7 }),
+      body: global.chance.sentence({ sentences: 4 }),
+      tags: [global.chance.word(), global.chance.word()],
+    };
+    await editor.submitArticle(articleDetails);
 
-    await editor.$tags.setValue("Tag1");
-    await browser.keys("Enter");
+    // TODO: Why expect doesn't work?
+    // await expect(editor.$title).toHaveText(articleDetails.title);
 
-    await editor.$publish.click();
-    await editor.$delete.click();
-    await browser.pause(1000);
+    await article.$delete.click();
+  });
+
+  describe('"Unsaved Changes" alerts', () => {
+    beforeEach(async () => {
+      await editor.$title.setValue("Unsaved Changes");
+    });
+    it("should alert when using browser navigation", async () => {
+      await browser.refresh();
+
+      await expect(() => browser.acceptAlert()).not.toThrow();
+    });
+    it("should alert when clicking a link", async () => {
+      await editor.$home.click();
+
+      const alertText = browser.getAlertText();
+      await expect(alertText).toEqual(
+        "Do you really want to leave? You have unsaved changes!"
+      );
+      await browser.acceptAlert();
+    });
   });
 });
