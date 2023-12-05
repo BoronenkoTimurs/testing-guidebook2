@@ -1,3 +1,5 @@
+// import { browser, $ } from "@wdio/globals";
+
 const Auth = require("../pageObjects/Auth.page");
 const { user1 } = require("../utilities/users");
 

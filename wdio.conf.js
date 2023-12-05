@@ -13,6 +13,7 @@ exports.config = {
   // ====================
   // WebdriverIO supports running e2e tests as well as unit and component tests.
   runner: "local",
+  // automationProtocol: "devtools",
   //
   // ==================
   // Specify Test Files
@@ -56,6 +57,19 @@ exports.config = {
   // Sauce Labs platform configurator - a great tool to configure your capabilities:
   // https://saucelabs.com/platform/platform-configurator
   //
+  // TODO: why issue with array in the result of executing login.js
+  // capabilities: {
+  //   myChromeBrowser: {
+  //     capabilities: {
+  //       browserName: "chrome",
+  //     },
+  //   },
+  //   myFirefoxBrowser: {
+  //     capabilities: {
+  //       browserName: "firefox",
+  //     },
+  //   },
+  // },
   capabilities: [
     {
       browserName: "chrome",
@@ -69,7 +83,7 @@ exports.config = {
   // Define all options that are relevant for the WebdriverIO instance here
   //
   // Level of logging verbosity: trace | debug | info | warn | error | silent
-  logLevel: "error",
+  logLevel: "info",
   //
   // Set specific log levels per logger
   // loggers:
@@ -96,7 +110,7 @@ exports.config = {
   baseUrl: "https://demo.learnwebdriverio.com/",
   //
   // Default timeout for all waitFor* commands.
-  waitforTimeout: 10000,
+  waitforTimeout: 5000,
   //
   // Default timeout in milliseconds for request
   // if browser driver or grid doesn't send response

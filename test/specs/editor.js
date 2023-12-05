@@ -1,3 +1,5 @@
+// import { browser, $ } from "@wdio/globals";
+
 const Auth = require("../pageObjects/Auth.page");
 const Editor = require("../pageObjects/Editor.page");
 const Chance = require("chance");
@@ -53,7 +55,7 @@ describe("Post Editor", () => {
     it("should alert when clicking a link", async () => {
       await editor.$home.click();
 
-      const alertText = browser.getAlertText();
+      const alertText = await browser.getAlertText();
       await expect(alertText).toEqual(
         "Do you really want to leave? You have unsaved changes!"
       );
