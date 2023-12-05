@@ -35,5 +35,10 @@ class Auth extends Generic {
       }
     );
   }
+  async clearSession() {
+    await browser.execute(async () => {
+      window.localStorage.clear();
+    });
+  }
 }
 module.exports = Auth;

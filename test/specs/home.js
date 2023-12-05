@@ -1,5 +1,7 @@
+// const Api = require("../../utils/Api");
 const Auth = require("../pageObjects/Auth.page");
 const Home = require("../pageObjects/Home.page");
+
 const { user1 } = require("../utilities/users");
 
 const home = new Home();
@@ -21,15 +23,29 @@ describe("Homepage", () => {
     before(async () => {
       await auth.load();
       await auth.login(user1);
-      await home.load();
-    });
-    it("should show both feedtabs text", async () => {
-      const feedTabsText = ["Your Feed", "Global Feed"];
 
-      for (let i = 0; i < feedTabsText.length; i++) {
-        const feedTabText = await home.$$feedTabs[i].getText();
-        await expect(feedTabText).toEqual(feedTabsText[i]);
-      }
+      await home.load();
+
+      // Error:  Unable to load spec files quite likely because they rely on `browser` object that is not fully initialised.
+      // const api = new Api("https://demo.learnwebdriverio.com/");
+      // const token = browser.call(async () => {
+      //   return await api.getAuthToken(user1);
+      // });
+      // await home.load();
+      // await browser.execute(async () => {
+      //   window.localStorage.setItem("id_token", browserToken);
+      // }, token);
+      // await home.load();
+    });
+    after(async () => {
+      // Is it realy clear the session?
+      auth.clearSession;
+    });
+    it("should show both feed tabs text", async () => {
+      await home.checkFeedText();
+    });
+    it("should show incorrect text for feed tabs", async () => {
+      await home.checkFeedIncorrectText();
     });
   });
 });
