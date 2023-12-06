@@ -1,11 +1,14 @@
-const { Chance } = require("chance");
-if (!process.env.SEED) {
-  process.env.SEEd = Math.random().toString();
+// Why not working? Loh
+// const Api = require("./utils/Api");
 
-  console.log(
-    `ChanceJS Seed: ${process.env.SEED} - Pass in using 'SEED=${process.env.SEED}'`
-  );
-}
+// const { Chance } = require("chance");
+// if (!process.esnv.SEED) {
+//   process.env.SEEd = Math.random().toString();
+
+//   console.log(
+//     `ChanceJS Seed: ${process.env.SEED} - Pass in using 'SEED=${process.env.SEED}'`
+//   );
+// }
 exports.config = {
   //
   // ====================
@@ -214,7 +217,20 @@ exports.config = {
     //   downloadThroughput: 1000000,
     //   uploadThroughput: 1000000,
     // });
-    global.chance = new Chance(process.env.SEED + specs[0]);
+    // Why not working? Loh
+    // global.chance = new Chance(process.env.SEED + specs[0]);
+    // global.api = new Api("https://demo.learnwebdriverio.com/");
+    // browser.addCommand("loginViaApi", function (user) {
+    //   const token = browser.call(() => {
+    //     return global.api.getAuthToken(user);
+    //   });
+    //   // load the base page so we can set the token
+    //   browser.url("./");
+    //   // inject the auth token
+    //   browser.execute((browserToken) => {
+    //     window.localStorage.setItem("id_token", browserToken);
+    //   }, token);
+    // });
   },
   /**
    * Runs before a WebdriverIO command gets executed.
